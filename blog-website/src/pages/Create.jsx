@@ -9,6 +9,7 @@ const Create = () => {
   const [content, setContent] = useState('');
   const [author, setAuthor] = useState('');
   const [imageUrl, setImageUrl] = useState('');
+  const [views,setViews]=useState(0);
 
   useEffect(() => {
     if (location.state && location.state.blog) {
@@ -17,12 +18,13 @@ const Create = () => {
       setContent(blog.content);
       setAuthor(blog.author);
       setImageUrl(blog.imageUrl);
+      setViews(blog.views);
     }
   }, [location.state]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const blogDetails = { title, content, author, imageUrl: imageUrl || 'No Image URL provided' };
+    const blogDetails = { title, content, author, imageUrl: imageUrl || 'No Image URL provided',views };
 
     const storedBlogs = JSON.parse(localStorage.getItem('blogDetails')) || [];
     if (id !== undefined) {
@@ -34,6 +36,7 @@ const Create = () => {
     localStorage.setItem('blogDetails', JSON.stringify(storedBlogs));
     navigate('/blogList');
 
+    setViews(0);
     setTitle('');
     setContent('');
     setAuthor('');
